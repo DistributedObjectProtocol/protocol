@@ -9,12 +9,13 @@ Those are the basic principles of OSP:
 
 
 
-
-
 ### Structure of request
 ```js
 [<request_id>, <action>, <params...>]
 ```
+1. **`<request_id>`** Always a number greater than 0.
+2. **`<action>`** Type of the action (connect, sync, call, set...) see below.
+3. **`<request_id>`** Always a number greater than 0.
 
 
 
