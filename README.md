@@ -27,7 +27,7 @@ In this documentation we will use the term **user** as **sender** and **server**
 [-<request_id>, <status>, <params...>]
 ```
 1. **`<request_id>`** Always an integer lower than 0 that refers the request_id sent. It just the request_id in negative: `request_id * -1`.
-2. **`<action>`** Type of the action (connect, sync, call, set...). Always an integer greater than -1. See below for the action types.
-3. **`<params...>`** Multiples parameters can be passed on every request. The parameters are defined for the type of action described bellow.
+2. **`<action>`** If status is 0 (Integer) means the request it has been resolved. Any other case means a request rejected. Status can be a string with the reason of the fail. Or even a [JSON](https://en.wikipedia.org/wiki/JSON).
+3. **`<params...>`** Multiples parameters can be passed on every response. The parameters are defined for the type of action described bellow.
 
 
