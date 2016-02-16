@@ -1,4 +1,5 @@
-My Awesome Book
+Object sync protocol specification (Draft)
 =======
+Object sync protocol is designed to synchronize two objects remotely. The two basic principles of OSP are performance when encoding and decoding a request. And be lightweight, sending the minimum bytes possible.
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+The format used to send data, is regular JSON.
