@@ -9,12 +9,11 @@ Those are the basic principles of OSP:
 - The format used to send data must be regular [JSON](https://en.wikipedia.org/wiki/JSON).
 
 ### Terms
-- **`request`** Request 
-- **`response`** Always 
-- **`sender`** Always 
-- **`receptor`** Always 
-- **`resolve`** Always
-- **`reject`** Always 
+- **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
+- **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
+- **`resolve`** todo
+- **`reject`** todo 
+
 
 
 ### Structure of request
