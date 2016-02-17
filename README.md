@@ -72,7 +72,7 @@ Or in two messages:
 
 
 ## Multi actions by one request
-Is possible send one request with multiple actions. The response must respect the order sent.
+Is possible send one request with multiple actions. The response must respect the order sent. And the response will not be sent until all the actions are processed.
 ```js
 [<request_id>, [<action1>, <params...>], [<action2>, <params...>]]
 ```
