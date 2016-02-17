@@ -45,7 +45,7 @@ Those are the basic principles of OSP:
 ## Abort request
 Abort instruction is kind of a request but without response.
 Requests only can be aborted by the sender. Receptor never abort a request, just reject if some error occurred. If receptor receive an abort instruction, receptor won't send any response.
-If the request is aborted before it sent, sender do not send any data at all. 
+If the request is aborted before is sent, sender do not send any data at all. 
 ```js
 [<request_id>]
 ```
