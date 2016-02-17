@@ -94,7 +94,7 @@ The response must be like:
 # Actions
 
 ### connect (0)
-todo todo
+todo to
 
 ### request (1)
 todo
