@@ -9,7 +9,10 @@ Those are the basic principles of OSP:
 - The format used to send data must be regular [JSON](https://en.wikipedia.org/wiki/JSON).
 
 
-### Terms
+## Terms
+- **`message`** todo
+- **`request`** todo
+- **`response`** todo
 - **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
 - **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
 - **`resolve`** todo
@@ -17,7 +20,7 @@ Those are the basic principles of OSP:
 
 
 
-### Structure of request
+## Structure of request
 ```js
 [<request_id>, <action>, <params...>]
 ```
@@ -28,7 +31,7 @@ Those are the basic principles of OSP:
 
 
 
-### Structure of response
+## Structure of response
 ```js
 [-<request_id>, <status>, <params...>]
 ```
@@ -39,7 +42,7 @@ Those are the basic principles of OSP:
 
 
 
-### Abort request
+## Abort request
 Abort instruction is kind of a request but without response.
 Requests only can be aborted by the sender. Receptor never abort a request, just reject if some error occurred. If receptor receive an abort instruction, receptor won't send any response.
 If the request is aborted before it sent, sender do not send any data at all. 
@@ -47,4 +50,30 @@ If the request is aborted before it sent, sender do not send any data at all.
 [<request_id>]
 ```
 1. **`<request_id>`** The request_id of the request sent that we want to abort.
+
+
+
+
+## Multi requests and responses
+Is possible send multiple requests in one message, just wrapping it in an Array. But the order of the responses is not fixed. Which means the response of request_id2 could be resolved before request_id1.
+```js
+[[<request_id1>, <action>, <params...>], [<request_id2>, <action>, <params...>]]
+```
+The response of a multi request can be send in one or multiple message. But the order is not established. (i.e.):
+```js
+[[-<request_id2>, <status>, <params...>], [-<request_id1>, <status>, <params...>]]
+```
+Or in two messages:
+```js
+[-<request_id2>, <status>, <params...>]
+[-<request_id1>, <status>, <params...>]
+```
+
+
+## Multi actions by one request
+Is possible send one request with multiple actions. The response must respect the order sent.
+```js
+[<request_id>, [<action>, <params...>], [<action>, <params...>]]
+```
+
 
