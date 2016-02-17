@@ -69,6 +69,13 @@ Or in two messages:
 [-<request_id2>, <state>, <params...>]
 [-<request_id1>, <state>, <params...>]
 ```
+---
+Requests and responses can be sent on the same message:
+```js
+[[-<request_id1>, <state>, <params...>], [<request_id2>, <action>, <params...>]]
+```
+In the example above the sender must wait for the response if the request_id2.
+
 
 
 ## Multi actions by one request
@@ -80,6 +87,7 @@ The response must be like:
 ```js
 [-<request_id>, [<stateAction1>, <params...>], [<stateAction2>, <params...>]]
 ```
+
 
 
 
