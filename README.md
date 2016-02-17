@@ -8,6 +8,7 @@ Those are the basic principles of OSP:
 - Good performance when encoding and decoding a request.
 - The format used to send data must be regular [JSON](https://en.wikipedia.org/wiki/JSON).
 
+
 ### Terms
 - **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
 - **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
