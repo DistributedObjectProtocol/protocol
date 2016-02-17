@@ -8,6 +8,14 @@ Those are the basic principles of OSP:
 - Good performance when encoding and decoding a request.
 - The format used to send data must be regular [JSON](https://en.wikipedia.org/wiki/JSON).
 
+### Terms
+- **`request`** Request 
+- **`response`** Always 
+- **`sender`** Always 
+- **`receptor`** Always 
+- **`resolve`** Always
+- **`reject`** Always 
+
 
 ### Structure of request
 ```js
