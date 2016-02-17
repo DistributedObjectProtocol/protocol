@@ -81,3 +81,25 @@ The response must be like:
 [-<request_id>, [<stateAction1>, <params...>], [<stateAction2>, <params...>]]
 ```
 
+
+
+# Actions
+
+### connect (0)
+todo
+
+### request (1)
+todo
+
+### sync (2)
+todo
+
+### unsync (3)
+todo
+
+### call (4)
+todo
+
+### set (5)
+todo
+
