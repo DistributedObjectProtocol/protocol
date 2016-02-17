@@ -28,7 +28,6 @@ Those are the basic principles of OSP:
 
 
 
-
 ### Structure of response
 ```js
 [-<request_id>, <status>, <params...>]
@@ -37,4 +36,13 @@ Those are the basic principles of OSP:
 2. **`<action>`** If status is 0 (Integer) means the request it has been resolved. Any other case means a request rejected. Status can be a string with the reason of the fail. Or even a [JSON](https://en.wikipedia.org/wiki/JSON).
 3. **`<params...>`** Multiples parameters can be passed on every response. The parameters are defined for the type of action described bellow.
 
+
+
+
+### Abort request
+Requests only can be aborted by the sender. Receptor never abort a request, just reject if some error occurred. If the request is aborted before it sent, sender do not send any data at all.
+```js
+[<request_id>]
+```
+1. **`<request_id>`** The request_id of the request we want to abort.
 
