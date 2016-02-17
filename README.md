@@ -10,9 +10,9 @@ Those are the basic principles of OSP:
 
 
 ## Terms
-- **`message`** todo
-- **`request`** todo
-- **`response`** todo
+- **`message`** Any kind of message with data. Could be a request/response/abort.
+- **`request`** A message that wait for a response.
+- **`response`** A message with the response of the request sent.
 - **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
 - **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
 - **`resolve`** todo
@@ -72,7 +72,7 @@ Or in two messages:
 
 
 ## Multi actions by one request
-Is possible send one request with multiple actions. The response must respect the order sent. And the response will not be sent until all the actions are processed.
+Is possible send one request with multiple actions. The response must respect the order sent. The response will not be sent until all the actions are processed.
 ```js
 [<request_id>, [<action1>, <params...>], [<action2>, <params...>]]
 ```
