@@ -16,8 +16,7 @@ Those are the basic principles of OSP:
 - **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
 - **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
 - **`resolve`** todo
-- **`reject`** todo 
-- **`reject`** state 
+- **`reject`** todo
 
 
 
