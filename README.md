@@ -3,6 +3,7 @@ Object sync protocol specification (Draft)
 Object sync protocol is designed to synchronize two objects remotely. 
 Those are the basic principles of OSP:
 - Bidirectional.
+- Replication.
 - Asynchronous.
 - Lightweight, sending the minimum bytes possible.
 - Good performance when encoding and decoding a request.
