@@ -13,8 +13,8 @@ Those are the basic principles of OSP:
 ## Terms
 - **`message`** Any kind of message with data. Could be a request/response/abort.
 - **`request`** A message that wait for a response.
-- **`response`** A message with the response of the request sent.
-- **`sender`** A sender always send a request and wait for a response. Unless the request is aborted. 
+- **`response`** A message that is the response of a request.
+- **`sender`** A sender always send a request and wait for a response. Sender can also send an abortion of a request.
 - **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
 - **`resolve`** todo
 - **`reject`** todo
