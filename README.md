@@ -37,7 +37,7 @@ Those are the basic principles of OSP:
 [-<request_id>, <state>, <params...>]
 ```
 1. **`<request_id>`** Always an integer lower than 0 that refers the request_id sent. It just the request_id in negative: `request_id * -1`.
-2. **`<action>`** If state is 0 (Integer) means the request it has been resolved. Any other case means a request rejected. Status can be a string with the reason of the fail. Or even a [JSON](https://en.wikipedia.org/wiki/JSON).
+2. **`<state>`** If state is 0 (Integer) means the request it has been resolved. Any other case means a request rejected. State can be a string with the reason of the fail. Or even a [JSON](https://en.wikipedia.org/wiki/JSON).
 3. **`<params...>`** Multiples parameters can be passed on every response. The parameters are defined for the type of action described bellow.
 
 
