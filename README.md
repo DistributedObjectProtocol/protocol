@@ -118,20 +118,20 @@ To do...
 
 ```js
 // Request ->
-[ <request_id>, 1, <params...>]
+[<request_id>, 1, <params...>]
 
 // Response <-
-[ -<request_id>, <state>, <object_id>, <data_object>]
+[-<request_id>, <state>, <object_id>, <data_object>]
 ```
 
 #### Example:
 
 ```js
 // Request ->
-[ 150, 1, "my@mail.com", "password1234"]
+[150, 1, "my@mail.com", "password1234"]
 
 // Response <-
-[ -150, 0, 99, {_id:"a25d5", name:"John Doe", balance:"$3500", sendMoney:"~F"}]
+[-150, 0, 99, {_id:"a25d5", name:"John Doe", balance:"$3500", sendMoney:"~F"}]
 ```
 
 
@@ -141,20 +141,20 @@ To do...
 
 ```js
 // Request ->
-[ <request_id>, 2, <object_id>]
+[<request_id>, 2, <object_id>]
 
 // Response <-
-[ -<request_id>, <state>]
+[-<request_id>, <state>]
 ```
 
 #### Example:
 
 ```js
 // Request ->
-[ 151, 2, 99]
+[151, 2, 99]
 
 // Response <-
-[ -151, 0]
+[-151, 0]
 ```
 
 
@@ -165,20 +165,20 @@ A `call` is when a subscriber calls a function/method of a remote object.
 
 ```js
 // Request ->
-[ <request_id>, 3, <object_id>, <path>, [<params...>] ]
+[<request_id>, 3, <object_id>, <path>, [<params...>]]
 
 // Response <-
-[ -<request_id>, 0, <return> ]
+[-<request_id>, 0, <response_value>]
 ```
 
 #### Example:
 
 ```js
 // Request ->
-[ 152, 3, 99, ['sendMoney'], ["$100", "myfriend@email.com"]]
+[152, 3, 99, ['sendMoney'], ["$100", "myfriend@email.com"]]
 
 // Response <-
-[ -152, 0, {message:"Money has been sent to your friend successfully!", error:false}]
+[-152, 0, {message:"Money has been sent to your friend successfully!", error:false}]
 ```
 
 
@@ -189,20 +189,20 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 
 ```js
 // Request ->
-[ <request_id>, 4, <object_id>, <path>, [<params...>] ]
+[<request_id>, 4, <object_id>, <path>, [<params...>]]
 
 // Response <-
-[ -<request_id>, 0, <return> ]
+[-<request_id>, 0, <response_value>]
 ```
 
 #### Example:
 
 ```js
 // Request ->
-[ 153, 4, 99, ['notification'], ["We are under maintenance"]]
+[153, 4, 99, ['notification'], ["We are under maintenance"]]
 
 // Response <-
-[ -153, 0, {error:false}]
+[-153, 0, {error:false}]
 ```
 
 ## Patch `5` `Owner -> Subscribers`
@@ -213,10 +213,10 @@ Sends mutations to subscribers.
 
 ```js
 // Request ->
-[ <request_id>, 5, <object_id>, <version>, <patch> ]
+[<request_id>, 5, <object_id>, <version>, <patch>]
 
 // Response <-
-[ -<request_id>, 0 ]
+[-<request_id>, 0]
 ```
 
 Version is need it to
@@ -227,10 +227,10 @@ Version is need it to
 
 ```js
 // Request ->
-[ 154, 5, 99, 1, {balance:"$3400"} ]
+[154, 5, 99, 1, {balance:"$3400"}]
 
 // Response <-
-[ -154, 0 ]
+[-154, 0]
 ```
 
 
