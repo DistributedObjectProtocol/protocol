@@ -14,12 +14,14 @@ Those are the features and principles of this protocol:
 
 
 ## Terms
-- **`request`** A message that wait for a response.
-- **`response`** A message that is the response of a request.
-- **`sender`** A sender always send a request and wait for a response. Sender can also send an abortion of a request.
-- **`receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
-- **`resolve`** todo
-- **`reject`** todo
+- **`Owner`** Owner of the object that can be subscribed.
+- **`Subscriber`** A subscriber is subscribed to an object.
+- **`Sender`** A sender always send a request and wait for a response. Sender can also send an abortion of a request.
+- **`Receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
+- **`Request`** A message that wait for a response.
+- **`Response`** A message that is the response of a request.
+- **`Resolve`** todo
+- **`Reject`** todo
 
 
 
@@ -128,7 +130,7 @@ To do...
 [ 150, 1, "my@mail.com", "password1234"]
 
 // Response <-
-[ -150, 0, 99, {_id:"a25d5", name:"John", surname:"Doe"}]
+[ -150, 0, 99, {_id:"a25d5", name:"John Doe", balance:"$3012", sendMoney:"~F"}]
 ```
 
 
@@ -156,7 +158,28 @@ To do...
 
 
 ## Call `3`
-To do...
+A `call` is when a subscriber calls a function/method of a remote object.
+
+#### Format:
+
+```js
+// Request ->
+[ <request_id>, 3, <object_id>, <path>, [<params...>] ]
+
+// Response <-
+[ <request_id>, 0, <return> ]
+```
+
+#### Example:
+
+```js
+// Request ->
+[ 152, 3, 99, ['sendMoney'], ["$100", "myfriend@email.com"]]
+
+// Response <-
+[ -152, 0, {message:"Money has been sent to your friend successfully!", error:false"}]
+```
+
 
 ## Broadcast `4`
 To do...
