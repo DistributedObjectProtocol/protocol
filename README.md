@@ -102,12 +102,12 @@ The response must be like:
 
 # Instructions
 
-## Subscribe
+### Subscribe
 
 * Instruction number: `1`
 * Direction: `Subscriber -> Owner`
 
-#### Format:
+##### Format:
 
 ```js
 // Request ->
@@ -117,7 +117,7 @@ The response must be like:
 [-<request_id>, <state>, <object_id>, <data_object>]
 ```
 
-#### Example:
+##### Example:
 
 ```js
 // Request ->
@@ -128,12 +128,12 @@ The response must be like:
 ```
 
 
-## Unsubscribe
+### Unsubscribe
 
 * Instruction number: `2`
 * Direction: `Subscriber -> Owner`
 
-#### Format:
+##### Format:
 
 ```js
 // Request ->
@@ -143,7 +143,7 @@ The response must be like:
 [-<request_id>, <state>]
 ```
 
-#### Example:
+##### Example:
 
 ```js
 // Request ->
@@ -154,14 +154,14 @@ The response must be like:
 ```
 
 
-## Call
+### Call
 
 A `call` is when a subscriber calls a function/method of a remote object.
 
 * Instruction number: `3`
 * Direction: `Subscriber -> Owner`
 
-#### Format:
+##### Format:
 
 ```js
 // Request ->
@@ -171,7 +171,7 @@ A `call` is when a subscriber calls a function/method of a remote object.
 [-<request_id>, 0, <response_value>]
 ```
 
-#### Example:
+##### Example:
 
 ```js
 // Request ->
@@ -182,13 +182,13 @@ A `call` is when a subscriber calls a function/method of a remote object.
 ```
 
 
-## Broadcast
+### Broadcast
 A `broadcast` is very similar to a `call` but works in the opposite direction. The owner can call a function/method that has been defined on the subscriber object. 
 
 * Instruction number: `4`
 * Direction: `Owner -> Subscribers`
 
-#### Format:
+##### Format:
 
 ```js
 // Request ->
@@ -198,7 +198,7 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 [-<request_id>, 0, <response_value>]
 ```
 
-#### Example:
+##### Example:
 
 ```js
 // Request ->
@@ -210,14 +210,14 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 
 
 
-## Patch
+### Patch
 
 Sends mutations to subscribers.
 
 * Instruction number: `4`
 * Direction: `Owner -> Subscribers`
 
-#### Format:
+##### Format:
 
 ```js
 // Request ->
@@ -227,9 +227,9 @@ Sends mutations to subscribers.
 [-<request_id>, 0]
 ```
 
-Version is need it to
 
-#### Example:
+
+##### Example:
 
 `version` is needed to guarantee the order of all the patches/mutations because requests are asynchronous. Is an int that increments on each patch. And is independent and unique for every subscriber.
 
@@ -253,7 +253,7 @@ The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). Bu
 ### Functions
 ### New object
 ### Splice array
-### Splice array
+### Swap array
 
 
 
