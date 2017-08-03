@@ -14,8 +14,8 @@ Those are the features and principles of this protocol:
 
 
 ## Terms
-- **`Owner`** Owner of the object that can be subscribed.
 - **`Subscriber`** A subscriber is subscribed to an object.
+- **`Owner`** Owner of a object that other nodes/subscribers are subscribed.
 - **`Sender`** A sender always send a request and wait for a response. Sender can also send an abortion of a request.
 - **`Receptor`** A receptor receive a request by a sender and must send the response back to the sender. Unless the request is aborted by the sender.
 - **`Request`** A message that wait for a response.
@@ -182,7 +182,27 @@ A `call` is when a subscriber calls a function/method of a remote object.
 
 
 ## Broadcast `4`
-To do...
+A `broadcast` is very similar to a `call` but works in the opposite direction. The owner can call a function/method that has been defined on the subscriber object. 
+
+#### Format:
+
+```js
+// Request ->
+[ <request_id>, 4, <object_id>, <path>, [<params...>] ]
+
+// Response <-
+[ <request_id>, 0, <return> ]
+```
+
+#### Example:
+
+```js
+// Request ->
+[ 153, 4, 99, ['notification'], ["We are under maintenance"]]
+
+// Response <-
+[ -153, 0, {error:false"}]
+```
 
 ## Patch `5`
 To do...
