@@ -111,7 +111,7 @@ To do...
 
 ## Subscribe `1`
 
-### Format:
+#### Format:
 
 ```js
 // Request ->
@@ -121,19 +121,39 @@ To do...
 [ -<request_id>, <state>, <object_id>, <data_object>]
 ```
 
-### Example:
+#### Example:
 
 ```js
 // Request ->
-[ 1234, 1, "my@mail.com", "password1234"]
+[ 150, 1, "my@mail.com", "password1234"]
 
 // Response <-
-[ -1234, 0, 1, {_id:"a25d5", name:"John", surname:"Doe"}]
+[ -150, 0, 99, {_id:"a25d5", name:"John", surname:"Doe"}]
 ```
 
 
 ## Unsubscribe `2`
-To do...
+
+#### Format:
+
+```js
+// Request ->
+[ <request_id>, 2, <object_id>]
+
+// Response <-
+[ -<request_id>, <state>]
+```
+
+#### Example:
+
+```js
+// Request ->
+[ 151, 2, 99]
+
+// Response <-
+[ -151, 0]
+```
+
 
 ## Call `3`
 To do...
