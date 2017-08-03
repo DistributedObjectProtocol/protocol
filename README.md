@@ -111,8 +111,10 @@ To do...
 
 # Instructions
 
-## Subscribe `1` `Subscriber -> Owner`
+## Subscribe
 
+* Instruction number: `1`
+* Direction: `Subscriber -> Owner`
 
 #### Format:
 
@@ -135,7 +137,10 @@ To do...
 ```
 
 
-## Unsubscribe `2` `Subscriber -> Owner`
+## Unsubscribe
+
+* Instruction number: `2`
+* Direction: `Subscriber -> Owner`
 
 #### Format:
 
@@ -158,8 +163,12 @@ To do...
 ```
 
 
-## Call `3` `Subscriber -> Owner`
+## Call
+
 A `call` is when a subscriber calls a function/method of a remote object.
+
+* Instruction number: `3`
+* Direction: `Subscriber -> Owner`
 
 #### Format:
 
@@ -182,8 +191,11 @@ A `call` is when a subscriber calls a function/method of a remote object.
 ```
 
 
-## Broadcast `4` `Owner -> Subscribers`
+## Broadcast
 A `broadcast` is very similar to a `call` but works in the opposite direction. The owner can call a function/method that has been defined on the subscriber object. 
+
+* Instruction number: `4`
+* Direction: `Owner -> Subscribers`
 
 #### Format:
 
@@ -205,9 +217,14 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 [-153, 0, {error:false}]
 ```
 
-## Patch `5` `Owner -> Subscribers`
+
+
+## Patch
 
 Sends mutations to subscribers.
+
+* Instruction number: `4`
+* Direction: `Owner -> Subscribers`
 
 #### Format:
 
