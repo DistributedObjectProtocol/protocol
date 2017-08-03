@@ -24,7 +24,7 @@ Those are the features and principles of this protocol:
 
 
 ## Request format
-```
+```js
 [<request_id>, <instruction>, <params...>]
 ```
 1. **`<request_id>`** Always an integer greater than 0 that represent the ID of each request. Request_id is unique by the sender, which means a receptor can receive exactly the same request from different senders. A sender can not send two requests with the same request_id to the same receptor.
@@ -37,7 +37,7 @@ Those are the features and principles of this protocol:
 
 
 ## Response format
-```
+```js
 [-<request_id>, <state>, <params...>]
 ```
 1. **`<request_id>`** Always an integer lower than 0 that refers the request_id sent. It just the request_id in negative: `request_id * -1`.
@@ -63,17 +63,17 @@ If the request is aborted before is sent, sender do not send any data at all.
 
 ## Multi requests and responses
 Is possible send multiple requests in one message, just wrapping it in an Array. But the order of the responses is not fixed. Which means the response of request_id2 could be resolved before request_id1.
-```
+```js
 [[<request_id1>, <instruction>, <params...>], [<request_id2>, <instruction>, <params...>]]
 ```
 
 The response of a multi request can be send in one or multiple message. But the order is not established. (i.e.):
-```
+```js
 [[-<request_id2>, <state>, <params...>], [-<request_id1>, <status>, <params...>]]
 ```
 
 Or in two messages:
-```
+```js
 [-<request_id2>, <state>, <params...>]
 [-<request_id1>, <state>, <params...>]
 ```
@@ -113,23 +113,21 @@ To do...
 
 ### Format:
 
-Request ->
 ```js
+// Request ->
 [ <request_id>, 1, <params...>]
-```
-Response <-
-```js
+
+// Response <-
 [ -<request_id>, <state>, <object_id>, <data_object>]
 ```
 
 ### Example:
 
-Request ->
 ```js
+// Request ->
 [ 1234, 1, "my@mail.com", "password1234"]
-```
-Response <-
-```js
+
+// Response <-
 [ -1234, 0, 1, {_id:"a25d5", name:"John", surname:"Doe"}]
 ```
 
