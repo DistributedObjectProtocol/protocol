@@ -111,7 +111,8 @@ To do...
 
 # Instructions
 
-## Subscribe `1`
+## Subscribe `1` `Subscriber -> Owner`
+
 
 #### Format:
 
@@ -134,7 +135,7 @@ To do...
 ```
 
 
-## Unsubscribe `2`
+## Unsubscribe `2` `Subscriber -> Owner`
 
 #### Format:
 
@@ -157,7 +158,7 @@ To do...
 ```
 
 
-## Call `3`
+## Call `3` `Subscriber -> Owner`
 A `call` is when a subscriber calls a function/method of a remote object.
 
 #### Format:
@@ -167,7 +168,7 @@ A `call` is when a subscriber calls a function/method of a remote object.
 [ <request_id>, 3, <object_id>, <path>, [<params...>] ]
 
 // Response <-
-[ <request_id>, 0, <return> ]
+[ -<request_id>, 0, <return> ]
 ```
 
 #### Example:
@@ -181,7 +182,7 @@ A `call` is when a subscriber calls a function/method of a remote object.
 ```
 
 
-## Broadcast `4`
+## Broadcast `4` `Owner -> Subscribers`
 A `broadcast` is very similar to a `call` but works in the opposite direction. The owner can call a function/method that has been defined on the subscriber object. 
 
 #### Format:
@@ -191,7 +192,7 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 [ <request_id>, 4, <object_id>, <path>, [<params...>] ]
 
 // Response <-
-[ <request_id>, 0, <return> ]
+[ -<request_id>, 0, <return> ]
 ```
 
 #### Example:
@@ -204,7 +205,7 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 [ -153, 0, {error:false}]
 ```
 
-## Patch `5`
+## Patch `5` `Owner -> Subscribers`
 
 Sends mutations to subscribers.
 
@@ -215,7 +216,7 @@ Sends mutations to subscribers.
 [ <request_id>, 5, <object_id>, <version>, <patch> ]
 
 // Response <-
-[ <request_id>, 0 ]
+[ -<request_id>, 0 ]
 ```
 
 Version is need it to
