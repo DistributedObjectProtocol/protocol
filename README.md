@@ -243,14 +243,19 @@ Version is need it to
 
 
 
-# Special keys and values
+# Objects and patches
 
-The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). But in order to allow mutations and RPC's we have to use two special values.
+### Basic examples
 
-To do...
+The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). But in order to allow mutations and RPC's we have to use special values.
+
+### Delete
+### Functions
+### New object
+### Splice array
+### Splice array
 
 
 
-# Format of patches
 
-To do...
+
