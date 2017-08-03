@@ -110,17 +110,29 @@ To do...
 # Instructions
 
 ## Subscribe `1`
-To do...
-<!--
-Format of the resquest:
-```
+
+### Format:
+
+Request ->
+```js
 [ <request_id>, 1, <params...>]
 ```
-Format of the response:
+Response <-
+```js
+[ -<request_id>, <state>, <object_id>, <data_object>]
 ```
-[ -<request_id>, <state>, <object_id>]
+
+### Example:
+
+Request ->
+```js
+[ 1234, 1, "my@mail.com", "password1234"]
 ```
--->
+Response <-
+```js
+[ -1234, 0, 1, {_id:"a25d5", name:"John", surname:"Doe"}]
+```
+
 
 ## Unsubscribe `2`
 To do...
