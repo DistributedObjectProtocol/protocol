@@ -225,16 +225,11 @@ Version is need it to
 `version` is needed to guarantee the order of all the patches/mutations because requests are asynchronous. Is an int that increments on each patch. And is independent and unique for every subscriber.
 
 ```js
-// Request 1 ->
+// Request ->
 [ 154, 5, 99, 1, {balance:"$3400"} ]
-// Request 2 ->
-[ 155, 5, 99, 2, {balance:"$3399"} ]
 
-// Response 1 <-
+// Response <-
 [ -154, 0 ]
-
-// Response 2 <-
-[ -155, 0 ]
 ```
 
 
