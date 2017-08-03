@@ -130,7 +130,7 @@ To do...
 [ 150, 1, "my@mail.com", "password1234"]
 
 // Response <-
-[ -150, 0, 99, {_id:"a25d5", name:"John Doe", balance:"$3012", sendMoney:"~F"}]
+[ -150, 0, 99, {_id:"a25d5", name:"John Doe", balance:"$3500", sendMoney:"~F"}]
 ```
 
 
@@ -177,7 +177,7 @@ A `call` is when a subscriber calls a function/method of a remote object.
 [ 152, 3, 99, ['sendMoney'], ["$100", "myfriend@email.com"]]
 
 // Response <-
-[ -152, 0, {message:"Money has been sent to your friend successfully!", error:false"}]
+[ -152, 0, {message:"Money has been sent to your friend successfully!", error:false}]
 ```
 
 
@@ -201,8 +201,37 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 [ 153, 4, 99, ['notification'], ["We are under maintenance"]]
 
 // Response <-
-[ -153, 0, {error:false"}]
+[ -153, 0, {error:false}]
 ```
 
 ## Patch `5`
-To do...
+
+Sends mutations to subscribers.
+
+#### Format:
+
+```js
+// Request ->
+[ <request_id>, 5, <object_id>, <version>, <patch> ]
+
+// Response <-
+[ <request_id>, 0 ]
+```
+
+Version is need it to
+
+#### Example:
+
+`version` is needed to guarantee the order of all the patches/mutations because requests are asynchronous. Is an int that increments on each patch. And is independent and unique for every subscriber.
+
+```js
+// Request ->
+[ [ 154, 5, 99, 1, {balance:"$3400"} ], [ 155, 5, 99, 2, {balance:"$3399"} ]]
+
+// Response 1 <-
+[ -154, 0 ]
+
+// Response 2 <-
+[ -155, 0 ]
+```
+
