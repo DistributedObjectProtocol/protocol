@@ -99,15 +99,6 @@ The response must be like:
 
 
 
-## Special keys and values
-
-The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). But in order to allow mutations and RPC's we have to use one special key and two special values.
-
-To do...
-
-
-
-
 
 # Instructions
 
@@ -252,6 +243,14 @@ Version is need it to
 
 
 
+# Special keys and values
+
+The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). But in order to allow mutations and RPC's we have to use two special values.
+
+To do...
+
 
 
 # Format of patches
+
+To do...
