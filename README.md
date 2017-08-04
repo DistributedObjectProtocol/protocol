@@ -393,7 +393,7 @@ Special value: `~F`
 }
 
 // Mutation
-{changeName: "F"}
+{changeName: "~F"}
 
 // Result
 {
