@@ -245,17 +245,323 @@ Sends mutations to subscribers.
 
 # Objects and patches
 
-### Basic examples
+<!--# The behavior of a mutation is very similar to lodash.merge-->
+
+### Basics
+
+
+
+
+Change value
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{name:"Josema"}
+
+// Result
+{
+    name: "Josema",
+    surname: "Doe"
+}
+```
+
+
+
+
+
+New property
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{fullname:"John Doe"}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    fullname: "John Doe"
+}
+```
+
+
+
+
+
+Deep mutation
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo",
+        second: "Ana"
+    }
+}
+
+// Mutation
+{childrens:{first:"Enzo Doe"}}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo Doe",
+        second: "Ana"
+    }
+}
+```
+
+
+
+Multiple mutations
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo",
+        second: "Ana"
+    }
+}
+
+// Mutation
+{name:"Josema", childrens:{first:"Enzo Doe"}}
+
+// Result
+{
+    name: "Josema",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo Doe",
+        second: "Ana"
+    }
+}
+```
+
+
 
 The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). But in order to allow mutations and RPC's we have to use special values.
 
 ### Delete
+
+Special value: `~U`
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{name:"~U"}
+
+// Result
+{
+    surname: "Doe"
+}
+```
+
+
+
 ### Functions
-### New object
+
+Special value: `~F`
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{changeName: "F"}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    changeName: function() {}
+}
+```
+`changeName` is now a remote function.
+
+
+### New object/array
+
+Special value: `[0, <new_object>]`
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{childrens:[0,{first:"Enzo",second:"Ana"}]}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo",
+        second: "Ana"
+    }
+}
+```
+
+
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{myarray:[0,[0,1,'B',true,{obj:false},[0]]]}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    myarray: [0,1,'B',true,{obj:false},[0]]
+}
+```
+
+
+
 ### Splice array
+
+Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
+
+
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[1,2]]}
+
+// Result
+{
+    letters: ['A','D']
+}
+```
+
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[2,0,'BC']]}
+
+// Result
+{
+    letters: ['A','B','BC','C','D']
+}
+```
+
+
+
+
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[1,2,'Bank','Cost']]}
+
+// Result
+{
+    letters: ['A','Bank','Cost','D']
+}
+```
+
+
 ### Swap array
 
+Special value: `[2, [<start>, <deleteCount>]]`
+
+
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[1,2]]}
+
+// Result
+{
+    letters: ['A','D']
+}
+```
+
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[2,0,'BC']]}
+
+// Result
+{
+    letters: ['A','B','BC','C','D']
+}
+```
 
 
 
 
+```js
+// Original object
+{
+    letters: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[1,[1,2,'Bank','Cost']]}
+
+// Result
+{
+    letters: ['A','Bank','Cost','D']
+}
+```
+
+
+
+
+# Chunks
+
+To do...
