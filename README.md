@@ -81,7 +81,7 @@ Or in two messages:
 ```
 
 Requests and responses can be sent on the same message:
-```
+```js
 [[-<request_id1>, <state>, <params...>], [<request_id2>, <instruction>, <params...>]]
 ```
 
