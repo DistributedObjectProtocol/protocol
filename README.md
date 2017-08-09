@@ -81,7 +81,7 @@ Or in two messages:
 ```
 
 Requests and responses can be sent on the same message:
-```js
+```
 [[-<request_id1>, <state>, <params...>], [<request_id2>, <instruction>, <params...>]]
 ```
 
@@ -245,7 +245,7 @@ Sends mutations to subscribers.
 
 # Objects and patches
 
-<!--# The behavior of a mutation is very similar to lodash.merge-->
+# The behavior of a mutation is very similar to lodash.merge
 
 ### Basics
 
@@ -456,11 +456,17 @@ Special value: `[0, <new_object>]`
 
 Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
 
+* `<start>` Integer greater than -1
+* `<deleteCount>` Integer greater than -1
+* `<items...>` Optional items to insert
+
+The behavior must match the [Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) implementation in JavaScript.
+
 
 ```js
 // Original object
 {
-    letters: ['A','B','C','D']
+    myarray: ['A','B','C','D']
 }
 
 // Mutation
@@ -468,14 +474,14 @@ Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
 
 // Result
 {
-    letters: ['A','D']
+    myarray: ['A','D']
 }
 ```
 
 ```js
 // Original object
 {
-    letters: ['A','B','C','D']
+    myarray: ['A','B','C','D']
 }
 
 // Mutation
@@ -483,7 +489,7 @@ Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
 
 // Result
 {
-    letters: ['A','B','BC','C','D']
+    myarray: ['A','B','BC','C','D']
 }
 ```
 
@@ -493,7 +499,7 @@ Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
 ```js
 // Original object
 {
-    letters: ['A','B','C','D']
+    myarray: ['A','B','C','D']
 }
 
 // Mutation
@@ -501,64 +507,47 @@ Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
 
 // Result
 {
-    letters: ['A','Bank','Cost','D']
+    myarray: ['A','Bank','Cost','D']
 }
 ```
 
 
 ### Swap array
 
-Special value: `[2, [<start>, <deleteCount>]]`
+Special value: `[2, [<swapA1>,<swapA2>,<swapB1>,<swapB2>, ...]]`
+
+`<swapA1>` and `<swapA2>` will be swapped
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[2,[0,1]]}
+
+// Result
+{
+    myarray: ['B','A','C','D']
+}
+```
 
 
 ```js
 // Original object
 {
-    letters: ['A','B','C','D']
+    myarray: ['A','B','C','D']
 }
 
 // Mutation
-{myarray:[1,[1,2]]}
+{myarray:[2,[0,3,1,2]]}
 
 // Result
 {
-    letters: ['A','D']
+    myarray: ['D','C','B','A']
 }
 ```
-
-```js
-// Original object
-{
-    letters: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[1,[2,0,'BC']]}
-
-// Result
-{
-    letters: ['A','B','BC','C','D']
-}
-```
-
-
-
-
-```js
-// Original object
-{
-    letters: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[1,[1,2,'Bank','Cost']]}
-
-// Result
-{
-    letters: ['A','Bank','Cost','D']
-}
-```
-
 
 
 
