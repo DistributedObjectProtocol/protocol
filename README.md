@@ -553,4 +553,38 @@ Special value: `[2, [<swapA1>,<swapA2>,<swapB1>,<swapB2>, ...]]`
 
 # Chunks
 
-To do...
+When a patch has a special instruction as `New object/array` `Splice` or `Swap` we cannot use the standard syntax for nested mutations.
+
+The solution for that is separate the patch into more than one patch as an Array.
+
+Imagine we have this two mutations in javascript:
+```js
+// New object
+user.books =  {
+    1: "You don't know JavaScript",
+    2: "JavaScript the good parts"
+}
+// Adding a new book
+user.books[3] = "JavaScript Patterns"
+```
+
+The equivalent mutations syntax separately would be:
+```js
+// New object
+{books:[0,{
+    1:"You don't know JavaScript",
+    2:"JavaScript the good parts"
+}]}
+
+// Adding a new book
+{books:{3:"JavaScript Patterns"}}
+```
+
+If we want to send it together in one patch we just have to wrap them into an Array.
+
+```js
+[ 
+    {books:[0,{1:"You don't know JavaScript",2:"JavaScript the good parts"}]}, 
+    {books:{3:"JavaScript Patterns"}}
+]
+```
