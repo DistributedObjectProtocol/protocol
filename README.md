@@ -440,13 +440,13 @@ Special value: `[0, <new_object>]`
 }
 
 // Mutation
-{myarray:[0,[0,1,'B',true,{obj:false},[0]]]}
+{myarray:[0,['A','B','C']]}
 
 // Result
 {
     name: "John",
     surname: "Doe",
-    myarray: [0,1,'B',true,{obj:false},[0]]
+    myarray: ['A','B','C']
 }
 ```
 
