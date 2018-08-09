@@ -361,7 +361,7 @@ The protocol is based on standard [JSON](https://en.wikipedia.org/wiki/JSON). Bu
 
 ### Delete
 
-Special value: `~U`
+Special value: `[0]`
 
 ```js
 // Original object
@@ -371,11 +371,158 @@ Special value: `~U`
 }
 
 // Mutation
-{name:"~U"}
+{name:[0]}
 
 // Result
 {
     surname: "Doe"
+}
+```
+
+
+
+
+### New object/array
+
+Special value: `[1, <new_object>]`
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{childrens:[1,{first:"Enzo",second:"Ana"}]}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    childrens: {
+        first: "Enzo",
+        second: "Ana"
+    }
+}
+```
+
+
+
+```js
+// Original object
+{
+    name: "John",
+    surname: "Doe"
+}
+
+// Mutation
+{myarray:[1,['A','B','C']]}
+
+// Result
+{
+    name: "John",
+    surname: "Doe",
+    myarray: ['A','B','C']
+}
+```
+
+
+
+### Splice array
+
+Special value: `[2, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
+
+* `<start>` Integer greater than -1
+* `<deleteCount>` Integer greater than -1
+* `<items...>` Optional items to insert
+
+The behavior must match the [Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) implementation in JavaScript.
+
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[2,[1,2]]}
+
+// Result
+{
+    myarray: ['A','D']
+}
+```
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[2,[2,0,'BC']]}
+
+// Result
+{
+    myarray: ['A','B','BC','C','D']
+}
+```
+
+
+
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[2,[1,2,'Bank','Cost']]}
+
+// Result
+{
+    myarray: ['A','Bank','Cost','D']
+}
+```
+
+
+### Swap array
+
+Special value: `[3, [<swapA1>,<swapA2>,<swapB1>,<swapB2>, ...]]`
+
+`<swapA1>` and `<swapA2>` will be swapped
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[3,[0,1]]}
+
+// Result
+{
+    myarray: ['B','A','C','D']
+}
+```
+
+
+```js
+// Original object
+{
+    myarray: ['A','B','C','D']
+}
+
+// Mutation
+{myarray:[3,[0,3,1,2]]}
+
+// Result
+{
+    myarray: ['D','C','B','A']
 }
 ```
 
@@ -403,151 +550,6 @@ Special value: `~F`
 }
 ```
 `changeName` is now a remote function.
-
-
-### New object/array
-
-Special value: `[0, <new_object>]`
-
-```js
-// Original object
-{
-    name: "John",
-    surname: "Doe"
-}
-
-// Mutation
-{childrens:[0,{first:"Enzo",second:"Ana"}]}
-
-// Result
-{
-    name: "John",
-    surname: "Doe",
-    childrens: {
-        first: "Enzo",
-        second: "Ana"
-    }
-}
-```
-
-
-
-```js
-// Original object
-{
-    name: "John",
-    surname: "Doe"
-}
-
-// Mutation
-{myarray:[0,['A','B','C']]}
-
-// Result
-{
-    name: "John",
-    surname: "Doe",
-    myarray: ['A','B','C']
-}
-```
-
-
-
-### Splice array
-
-Special value: `[1, [<start>, <deleteCount>, <item1>, <item2>, ...]]`
-
-* `<start>` Integer greater than -1
-* `<deleteCount>` Integer greater than -1
-* `<items...>` Optional items to insert
-
-The behavior must match the [Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) implementation in JavaScript.
-
-
-```js
-// Original object
-{
-    myarray: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[1,[1,2]]}
-
-// Result
-{
-    myarray: ['A','D']
-}
-```
-
-```js
-// Original object
-{
-    myarray: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[1,[2,0,'BC']]}
-
-// Result
-{
-    myarray: ['A','B','BC','C','D']
-}
-```
-
-
-
-
-```js
-// Original object
-{
-    myarray: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[1,[1,2,'Bank','Cost']]}
-
-// Result
-{
-    myarray: ['A','Bank','Cost','D']
-}
-```
-
-
-### Swap array
-
-Special value: `[2, [<swapA1>,<swapA2>,<swapB1>,<swapB2>, ...]]`
-
-`<swapA1>` and `<swapA2>` will be swapped
-
-```js
-// Original object
-{
-    myarray: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[2,[0,1]]}
-
-// Result
-{
-    myarray: ['B','A','C','D']
-}
-```
-
-
-```js
-// Original object
-{
-    myarray: ['A','B','C','D']
-}
-
-// Mutation
-{myarray:[2,[0,3,1,2]]}
-
-// Result
-{
-    myarray: ['D','C','B','A']
-}
-```
 
 
 
