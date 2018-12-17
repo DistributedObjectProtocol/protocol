@@ -214,7 +214,7 @@ A `broadcast` is very similar to a `call` but works in the opposite direction. T
 
 Sends mutations to subscribers.
 
-* Instruction number: `4`
+* Instruction number: `5`
 * Direction: `Owner -> Subscribers`
 
 ##### Format:
