@@ -13,6 +13,7 @@ Those are the features and principles of this protocol:
 
 What is not or what does not do:
 - Consensus data protocol
+- Manage conflict resolution
 - Auth server/client protocol
 
 
