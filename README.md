@@ -3,13 +3,16 @@
 This protocol is designed to distribute [JSON](https://en.wikipedia.org/wiki/JSON) objects between nodes. Understanding a node as an entity that can store JSON objects and can comunicate with other nodes.
 
 Those are the features and principles of this protocol:
-
 - Unidirectional data-flow.
 - Asynchronous.
 - Lightweight, sending the minimum bytes possible.
 - Remote Procedure Calls.
 - Pub/Sub
 - Transport agnostic.
+
+What is not or what does not do:
+- Consensus data protocol
+- Auth server/client protocol
 
 
 
