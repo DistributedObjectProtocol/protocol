@@ -3,6 +3,7 @@
 This protocol is designed to distribute [JSON](https://en.wikipedia.org/wiki/JSON) objects between nodes. Understanding a node as an entity that can store JSON objects and can comunicate with other nodes.
 
 Those are the features and principles of this protocol:
+- State management
 - Unidirectional data-flow.
 - Asynchronous.
 - Lightweight, sending the minimum bytes possible.
