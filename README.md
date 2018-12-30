@@ -245,7 +245,7 @@ Sends mutations to subscribers.
 
 # Objects and patches
 
-# The behavior of a mutation is very similar to lodash.merge
+The behavior of a mutation is very similar to lodash.merge
 
 ### Basics
 
