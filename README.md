@@ -180,7 +180,7 @@ A `call` is when a subscriber calls a function/method of a remote object.
 
 ```js
 // Request ->
-[152, 3, 99, ['sendMoney'], ["$100", "myfriend@email.com"]]
+[152, 3, 99, ["sendMoney"], ["$100", "myfriend@email.com"]]
 
 // Response <-
 [-152, 0, {message:"Money has been sent to your friend successfully!", error:false}]
@@ -232,11 +232,10 @@ Sends mutations to subscribers.
 [-<request_id>, 0]
 ```
 
+`version` is needed to guarantee the order of all the patches/mutations because requests are asynchronous. Is an int that increments on each patch. And is independent and unique for every subscriber.
 
 
 ##### Example:
-
-`version` is needed to guarantee the order of all the patches/mutations because requests are asynchronous. Is an int that increments on each patch. And is independent and unique for every subscriber.
 
 ```js
 // Request ->
