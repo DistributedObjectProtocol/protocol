@@ -91,7 +91,7 @@ Requests and responses can be sent on the same message:
 ```
 
 
-
+<!--
 ## Multi instructions by one request
 Is possible send one request with multiple instructions. Responses must respect the order of the requests. Responses will not be sent until all the instructions are processed.
 ```js
@@ -101,7 +101,7 @@ The response must be like:
 ```js
 [-<request_id>, [<stateinstruction1>, <params...>], [<stateinstruction2>, <params...>]]
 ```
-
+-->
 
 
 
