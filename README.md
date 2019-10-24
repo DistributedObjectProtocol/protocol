@@ -27,7 +27,7 @@ What is not or what does not do:
 - **`Receptor`** A receptor receive a request by a sender and must send the response back to the sender.
 
 
-# Request and Response
+# Remote Procedure Calls
 
 ### Request format
 ```html
@@ -39,8 +39,8 @@ What is not or what does not do:
 ```html
 [-<request_id>, <response_state>, <response_value>]
 ```
+---
 
-# Types
 - **`<request_id>`** 
 
     Always a number. `request_id` is unique by the sender, which means a receptor can receive exactly the same request from different senders. A sender can not send two requests with the same `request_id` to the same receptor.
@@ -57,35 +57,47 @@ What is not or what does not do:
 - **`<argument|response_value>`** Any type.
 
 
-# Special types (EJSON)
+# Patches
 
-[Standard JSON](https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax) does not allow functions or undefined values. To allow these types we are going to use our own implementation of the [EJSON](https://github.com/mongodb/specifications/blob/master/source/extended-json.rst) format.
+## Applying patches
+
+To do... 
+
+But for now this is a good entry point: 
+https://github.com/DistributedObjectProtocol/dop/blob/master/test/merge.js
+https://github.com/DistributedObjectProtocol/dop/blob/master/test/applyPatch.js
+
+
+## Special instructions
+
+This protocol uses [standard JSON](https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax) but in order to add some behavior to the patches, like sending functions or deletions we are going to use our own implementation of the [EJSON](https://github.com/mongodb/specifications/blob/master/source/extended-json.rst) format.
 
 ### Function
+
+Define a remote function (RPC)
 
 ```
 // Format
 { <key>: { $function: <function_id> }}
 
-// Original object
-{ getUsers: () => {} }
-
-// Becomes
+// Example
 { "getUsers": { "$function": 1 }
+
 ```
 
-### Undefined
+### Delete
 
+Removes a value from an object or array. If is an array and `<key>` exists as position, this will be declared as undefined/empty.
 
 ```
 // Format
-{ <key>: { $undefined: true }}
+{ <key>: { $delete: true }}
 
-// Original object
+// Example
+{ "user_1": { "$delete": true }
+
+// JavaScript proposal
 { user_1: undefined }
-
-// Becomes
-{ "user_1": { "$undefined": true }
 ```
 
 
