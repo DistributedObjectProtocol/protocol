@@ -1,72 +1,60 @@
-# Distributed Object Protocol specification (Draft)
+# Distributed Object Protocol specification
 
-This protocol is designed to distribute [JSON](https://en.wikipedia.org/wiki/JSON) objects between nodes via [Remote Procedure Calls (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call). Understanding a node as an entity that can store JSON objects and can comunicate with other nodes.
+This protocol is designed to distribute and mutate [JSON](https://en.wikipedia.org/wiki/JSON) between [nodes](<https://en.wikipedia.org/wiki/Node_(networking)>) using [patches](https://tools.ietf.org/html/rfc7386) that are sended via [Remote Procedure Calls (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call).
 
-Those are the features and principles of this protocol:
+The protocol is a combination of two parts. The RPC specification and the patch format with its processing rules. Both definitions can be inmplemented independently. usinging in conjuntion makes a powerful tool to manage the state of your App or system.
 
--   State management
--   Unidirectional data-flow.
--   Asynchronous.
--   Lightweight, sending the minimum bytes possible.
--   Remote Procedure Calls.
--   Pub/Sub
--   Transport agnostic.
+> It is important to notice that DOP does not handle data sync or conflict resolutions. It is not a CRDT or OT protocol.
 
-What is not or what does not do:
+### 1. [Remote Procedure Calls (RPC)](#Remote-Procedure-Calls)
 
--   Consensus data protocol
--   Manage conflict resolution
--   Auth server/client protocol
-
-# Terms
-
-- **`Request`** A message that wait for a response.
-- **`Response`** A message that is the response of a request.
-- **`Push`** A message that does not wait for a response.
-- **`Sender`** A sender always send a request and wait for a response. Sender can also send an abortion of a request. A sender can also send a push without response.
-- **`Receptor`** A receptor receive a request by a sender and must send the response back to the sender.
-
+### 2. [Patches](#Patches)
 
 # Remote Procedure Calls
 
-### Request format
-```html
+## Request
+
+```json
 [<request_id>, <function_id>, [<argument1>, <argument2>, ...]]
 ```
 
-### Response format
+- **`<request_id>`** An integer greater than `0` (zero).
 
-```html
+- **`<function_id>`** An integer that represent the id of the function that has to be runned.
+
+- **`<argument>`** Any value.
+
+## Response
+
+```json
 [-<request_id>, <response_state>, <response_value>]
 ```
----
 
-- **`<request_id>`** 
+- **`<request_id>`** An integer lower than `0` (zero). Is just the `request_id` used on the request but in negative.
 
-    Always a number. `request_id` is unique by the sender, which means a receptor can receive exactly the same request from different senders. A sender can not send two requests with the same `request_id` to the same receptor.
+- **`<response_state>`** If state is `0` (zero) means the request it has been resolved. Any other case means a rejection.
 
-    - Greater than `0` means is the id of the request. 
-    - Lower than `0` means is a response. It just the `request_id` in negative: ``request_id` * -1`.
-    - If is `0` means is a push and no response is required.
+- **`<response_value>`** Can be any value. But is only defined if the `response_value` is equal to `0` (zero). Which means is a valid response.
 
+## Request without response
 
-- **`<function_id>`** Represent the id of the function that has to be executed for the receptor.
+```json
+[0, <function_id>, [<argument1>, <argument2>, ...]]
+```
 
-- **`<response_state>`** If state is `0` (number) means the request it has been resolved. Any other case means a rejection.
+- **`<function_id>`** An integer that represent the id of the function that has to be runned.
 
-- **`<argument|response_value>`** Any type.
-
+- **`<argument>`** Any value.
 
 # Patches
 
 ## Applying patches
 
-To do... 
+To do...
 
-But for now this is a good entry point: 
+But for now this is a good entry point:
 https://github.com/DistributedObjectProtocol/dop/blob/master/test/merge.js
 https://github.com/DistributedObjectProtocol/dop/blob/master/test/applyPatch.js
-
 
 ## Special instructions
 
@@ -99,6 +87,3 @@ Removes a value from an object or array. If is an array and `<key>` exists as po
 // JavaScript proposal
 { user_1: undefined }
 ```
-
-
-
