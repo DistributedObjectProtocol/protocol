@@ -10,6 +10,8 @@ The protocol is a combination of two parts. The RPC specification and the patch 
 
 ### 2. [Patches](#Patches)
 
+### 3. [Types](#Types)
+
 # Remote Procedure Calls
 
 ## Request
@@ -24,7 +26,7 @@ The protocol is a combination of two parts. The RPC specification and the patch 
 
 - **`<request_id>`** An integer greater than `0` (zero).
 
-- **`<function_id>`** An integer that represent the id of the function previously defined that has to be runned.
+- **`<function_id>`** A number or string that represent the id of the function previously defined that has to be runned.
 
 - **`<argument>`** Any value.
 
@@ -65,8 +67,116 @@ This is useful when it does not need a response. Like a push notification.
 
 # Patches
 
-### Function
+A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification.
 
-### Delete
+There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave it as normal `null` type.
 
-### Replace
+Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$delete": 1 }` type.
+
+Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning to make it more standard.
+
+Examples of valid types
+
+```json
+{ "$delete": 0 }
+
+{ "$delete": { "more":"data" } }
+
+{ "$replace": ["any", "JSON", "value"] }
+```
+
+Examples of invalid types
+
+```json
+{ "delete": 0 }
+
+{ "$delete": 0, "more":"data" }
+```
+
+# Types
+
+## Delete
+
+Indicates the deletion of existing values in the target.
+
+```json
+{ "$delete": 0 }
+```
+
+### Examples
+
+This example from [JSON Merge Patch](https://tools.ietf.org/html/rfc7386)
+
+```json
+// Original
+{ "a": "b" }
+
+// Patch
+{ "a": null }
+
+// Result
+{}
+```
+
+Becomes
+
+```json
+// Original
+{ "a": "b" }
+
+// Patch
+{ "a": { "$delete": 0 } }
+
+// Result
+{}
+```
+
+```json
+// Original
+{
+  "a": "b",
+  "c": {
+    "d": "e",
+    "f": "g"
+  }
+}
+
+// Patch
+{
+  "a": "z",
+  "c": {
+    "f": { "$delete": 0 }
+  }
+}
+
+// Result
+{
+  "a": "z",
+  "c": {
+    "d": "e",
+  }
+}
+```
+
+## Function
+
+It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
+
+```json
+{ "$function": <function_id> }
+```
+
+### Examples
+
+```js
+// Original
+{}
+
+// Patch
+{ "loginUser": { "$function": 975 } }
+
+// Result in Javascript
+{ "loginUser": function(){} }
+```
+
+## Replace
