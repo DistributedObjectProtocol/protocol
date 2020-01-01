@@ -1,8 +1,8 @@
 # Distributed Object Protocol specification
 
-This protocol is designed to distribute and mutate [JSON](https://en.wikipedia.org/wiki/JSON) between [nodes](<https://en.wikipedia.org/wiki/Node_(networking)>) using [patches](https://tools.ietf.org/html/rfc7386) that are sended via [Remote Procedure Calls (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call).
+This protocol is designed to distribute and mutate [JSON](https://en.wikipedia.org/wiki/JSON) between [nodes](<https://en.wikipedia.org/wiki/Node_(networking)>) using [patches](https://tools.ietf.org/html/rfc7386) that are sent via [Remote Procedure Calls (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call).
 
-The protocol is a combination of two parts. The RPC specification and the patch format with its processing rules. Both definitions can be inmplemented independently. usinging in conjuntion makes a powerful tool to manage the state of your App or system.
+The protocol is a combination of two parts. The RPC specification and the patch format with its processing rules. Both definitions can be implemented independently. Using it in conjunction makes a powerful tool to manage the state of your App or system.
 
 > It is important to point that DOP does not handle data sync or conflict resolutions. It is not a CRDT or OT protocol.
 
@@ -16,7 +16,7 @@ The protocol is a combination of two parts. The RPC specification and the patch 
 
 ## Request
 
-```json
+```js
 // Format
 [<request_id>, <function_id>, [<argument1>, <argument2>, ...]]
 
@@ -32,7 +32,7 @@ The protocol is a combination of two parts. The RPC specification and the patch 
 
 ## Response
 
-```json
+```js
 // Format
 [-<request_id>, <response_state>, <response_value>]
 
@@ -53,7 +53,7 @@ The protocol is a combination of two parts. The RPC specification and the patch 
 
 This is useful when it does not need a response. Like a push notification.
 
-```json
+```js
 // Format
 [0, <function_id>, [<argument1>, <argument2>, ...]]
 
@@ -77,7 +77,7 @@ Types are always defined as an Object with only one key and value. The key name 
 
 Examples of valid types
 
-```json
+```js
 { "$delete": 0 }
 
 { "$delete": { "more":"data" } }
@@ -87,7 +87,7 @@ Examples of valid types
 
 Examples of invalid types
 
-```json
+```js
 { "delete": 0 }
 
 { "$delete": 0, "more":"data" }
@@ -99,7 +99,7 @@ Examples of invalid types
 
 Indicates the deletion of existing values in the target.
 
-```json
+```js
 { "$delete": 0 }
 ```
 
@@ -107,7 +107,7 @@ Indicates the deletion of existing values in the target.
 
 This example from [JSON Merge Patch](https://tools.ietf.org/html/rfc7386)
 
-```json
+```js
 // Original
 { "a": "b" }
 
@@ -120,7 +120,7 @@ This example from [JSON Merge Patch](https://tools.ietf.org/html/rfc7386)
 
 Becomes
 
-```json
+```js
 // Original
 { "a": "b" }
 
@@ -131,7 +131,7 @@ Becomes
 {}
 ```
 
-```json
+```js
 // Original
 {
   "a": "b",
@@ -162,7 +162,7 @@ Becomes
 
 It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
 
-```json
+```js
 { "$function": <function_id> }
 ```
 
@@ -180,3 +180,5 @@ It defines a remote function that can be used later to make a [remote procedure 
 ```
 
 ## Replace
+
+## Escape
