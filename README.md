@@ -71,7 +71,7 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 
 There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave it as normal `null` type.
 
-Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$delete": 1 }` type.
+Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$delete": 0 }` type.
 
 Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning to make it more standard.
 
@@ -103,7 +103,7 @@ Indicates the deletion of existing values in the target.
 { "$delete": 0 }
 ```
 
-### Examples
+**Examples**
 
 This example from [JSON Merge Patch](https://tools.ietf.org/html/rfc7386)
 
@@ -166,7 +166,7 @@ It defines a remote function that can be used later to make a [remote procedure 
 { "$function": <function_id> }
 ```
 
-### Examples
+**Examples**
 
 ```js
 // Original
@@ -181,4 +181,25 @@ It defines a remote function that can be used later to make a [remote procedure 
 
 ## Replace
 
+The replace type replaces objects at the target location with a new object.
+
+```js
+{ "$replace": <new_object> }
+```
+
+**Examples**
+
+```js
+// Original
+{ "data": { "a": 1, "b": 2 } }
+
+// Patch
+{ "data": { "$replace": { "c": 3 } } }
+
+// Result
+{ "data": { "c": 3 } }
+```
+
 ## Escape
+
+To do
