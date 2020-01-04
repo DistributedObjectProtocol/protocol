@@ -2,9 +2,9 @@
 
 This protocol is designed to distribute and mutate [JSON](https://en.wikipedia.org/wiki/JSON) between [nodes](<https://en.wikipedia.org/wiki/Node_(networking)>) using [patches](https://tools.ietf.org/html/rfc7386) that are sent via [Remote Procedure Calls (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call).
 
-The protocol is a combination of two parts. The RPC specification and the patch format with its processing rules. Both definitions can be implemented independently. Using it in conjunction makes a powerful tool to manage the state of your App or system.
+It is a thin layer on top of your data network that helps you communicate nodes using RPCs. It is also a pattern that makes easy, update, mutate or even sync the state of your system.
 
-> It is important to point that DOP does not handle data sync or conflict resolutions. It is not a CRDT or OT protocol.
+> Is important to point out that DOP does not handle data sync or conflict resolutions. It is not a CRDT or OT protocol.
 
 ### 1. [Remote Procedure Calls](#Remote-Procedure-Calls)
 
