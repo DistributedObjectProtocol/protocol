@@ -192,17 +192,17 @@ Types are always defined as an Object with only one key and value. The key name 
 Examples of valid types
 
 ```js
-{ "$d": 0 }
+{ "$clone": 0 }
 
-{ "$d": { "more":"data" } }
+{ "$clone": { "more":"data" } }
 
-{ "$r": ["any", "JSON", "value"] }
+{ "$push": ["any", "JSON", "value"] }
 ```
 
 Examples of invalid types
 
 ```js
-{ "delete": 0 }
+{ "mytype": 0 }
 
-{ "$d": 0, "more":"data" }
+{ "$clone": 0, "$more":"data" }
 ```
