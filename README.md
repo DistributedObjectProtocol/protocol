@@ -67,7 +67,7 @@ This is useful when it does not need a response. Like a push notification.
 
 # Patches
 
-A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification.
+A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification ([except one](#Delete)).
 
 ### Examples
 
@@ -95,30 +95,11 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 
 ## Delete
 
-There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave it as normal `null` type.
+There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
 
-Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$d": 0 }` type.
-
-```js
-{ "$d": 0 }
-```
+DOP incorporates special types that can extend the basic instructions. For example, if we want to delete properties we would use `{"$d":0}`.
 
 **Examples**
-
-This example from [JSON Merge Patch](https://tools.ietf.org/html/rfc7386)
-
-```js
-// Original
-{ "a": "b" }
-
-// Patch
-{ "a": null }
-
-// Result
-{}
-```
-
-Becomes
 
 ```js
 // Original
