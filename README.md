@@ -58,7 +58,7 @@ This is useful when it does not need a response. Like a push notification.
 [0, <function_id>, [<argument1>, <argument2>, ...]]
 
 // Example
-[0, 1, ["NEW_USER_CONNECTED", { "nick":"Enzo", "at":"30 Nov 2019 14:18:31" }]]
+[0, 1, {event: "USER_CONNECTED", data: { "nick":"Enzo","at":"30 Nov 2019 14:18:31" }}]
 ```
 
 - **`<function_id>`** An integer that represent the id of the function previously defined that has to be runned.
