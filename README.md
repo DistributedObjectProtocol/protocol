@@ -69,20 +69,25 @@ This is useful when it does not need a response. Like a push notification.
 
 A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification.
 
-There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave it as normal `null` type.
+|      ORIGINAL       |      PATCH       |       RESULT        |
+| :-----------------: | :--------------: | :-----------------: |
+|     `{"a":"b"}`     |   `{"a":"c"}`    |     `{"a":"c"}`     |
+|     `{"a":"b"}`     |   `{"b":"c"}`    | `{"a":"b","b":"c"}` |
+|     `{"a":"b"}`     | `{"a":{"$d":0}}` |        `{}`         |
+| `{"a":"b","b":"c"}` |                  |                     |
 
-Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$delete": 0 }` type.
+### Valid types
 
-Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning to make it more standard.
+Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning.
 
 Examples of valid types
 
 ```js
-{ "$delete": 0 }
+{ "$d": 0 }
 
-{ "$delete": { "more":"data" } }
+{ "$d": { "more":"data" } }
 
-{ "$replace": ["any", "JSON", "value"] }
+{ "$r": ["any", "JSON", "value"] }
 ```
 
 Examples of invalid types
@@ -90,17 +95,19 @@ Examples of invalid types
 ```js
 { "delete": 0 }
 
-{ "$delete": 0, "more":"data" }
+{ "$d": 0, "more":"data" }
 ```
 
 # Types
 
 ## Delete
 
-Indicates the deletion of existing values in the target.
+There is one big difference between JSON Merge Patch and DOP. JSON Merge Patch uses `null` as an instruction to delete properties, while in DOP we leave it as normal `null` type.
+
+Instead of using `null` to delete, DOP incorporates special types that can extend the basic instructions of JSON Merge Patch. For example in the case of `null`, if we want to delete properties we will use the `{ "$d": 0 }` type.
 
 ```js
-{ "$delete": 0 }
+{ "$d": 0 }
 ```
 
 **Examples**
@@ -125,7 +132,7 @@ Becomes
 { "a": "b" }
 
 // Patch
-{ "a": { "$delete": 0 } }
+{ "a": { "$d": 0 } }
 
 // Result
 {}
@@ -145,7 +152,7 @@ Becomes
 {
   "a": "z",
   "c": {
-    "f": { "$delete": 0 }
+    "f": { "$d": 0 }
   }
 }
 
@@ -163,7 +170,7 @@ Becomes
 It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
 
 ```js
-{ "$function": <function_id> }
+{ "$f": <function_id> }
 ```
 
 **Examples**
@@ -173,7 +180,7 @@ It defines a remote function that can be used later to make a [remote procedure 
 {}
 
 // Patch
-{ "loginUser": { "$function": 975 } }
+{ "loginUser": { "$f": 975 } }
 
 // Result in Javascript
 { "loginUser": function(){} }
@@ -184,7 +191,7 @@ It defines a remote function that can be used later to make a [remote procedure 
 The replace type replaces objects at the target location with a new object.
 
 ```js
-{ "$replace": <new_object> }
+{ "$r": <new_object> }
 ```
 
 **Examples**
@@ -194,7 +201,7 @@ The replace type replaces objects at the target location with a new object.
 { "data": { "a": 1, "b": 2 } }
 
 // Patch
-{ "data": { "$replace": { "c": 3 } } }
+{ "data": { "$r": { "c": 3 } } }
 
 // Result
 { "data": { "c": 3 } }
