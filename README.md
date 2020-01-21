@@ -69,34 +69,27 @@ This is useful when it does not need a response. Like a push notification.
 
 A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification.
 
-|      ORIGINAL       |      PATCH       |       RESULT        |
-| :-----------------: | :--------------: | :-----------------: |
-|     `{"a":"b"}`     |   `{"a":"c"}`    |     `{"a":"c"}`     |
-|     `{"a":"b"}`     |   `{"b":"c"}`    | `{"a":"b","b":"c"}` |
-|     `{"a":"b"}`     | `{"a":{"$d":0}}` |        `{}`         |
-| `{"a":"b","b":"c"}` |                  |                     |
+### Examples
 
-### Valid types
-
-Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning.
-
-Examples of valid types
-
-```js
-{ "$d": 0 }
-
-{ "$d": { "more":"data" } }
-
-{ "$r": ["any", "JSON", "value"] }
-```
-
-Examples of invalid types
-
-```js
-{ "delete": 0 }
-
-{ "$d": 0, "more":"data" }
-```
+|         ORIGINAL          |              PATCH              |         RESULT         |
+| :-----------------------: | :-----------------------------: | :--------------------: |
+|        `{"a":"b"}`        |           `{"a":"c"}`           |      `{"a":"c"}`       |
+|        `{"a":"b"}`        |           `{"b":"c"}`           |  `{"a":"b","b":"c"}`   |
+|        `{"a":"b"}`        |        `{"a":{"$d":0}}`         |          `{}`          |
+|    `{"a":"b","b":"c"}`    |        `{"a":{"$d":0}}`         |      `{"b":"c"}`       |
+|       `{"a":["b"]}`       |           `{"a":"c"}`           |      `{"a":"c"}`       |
+|        `{"a":"c"}`        |          `{"a":["b"]}`          |     `{"a":["b"]}`      |
+|    `{"a": {"b":"c"}}`     | `{"a":{"b":"d","c":{"$d":0}}}`  |   `{"a": {"b":"d"}}`   |
+|    `{"a":[{"b":"c"}]}`    |          `{"a": [1]}`           |      `{"a": [1]}`      |
+|        `["a","b"]`        |           `["c","d"]`           |      `["c","d"]`       |
+|        `{"a":"b"}`        |             `["c"]`             |        `["c"]`         |
+|       `{"a":"foo"}`       |          `{"a":null}`           |      `{"a":null}`      |
+|       `{"a":"foo"}`       |             `null`              |         `null`         |
+|       `{"a":"foo"}`       |             `"bar"`             |        `"bar"`         |
+|     `{"e":{"$d":0}}`      |            `{"a":1}`            | `{"e":{"$d":0},"a":1}` |
+|          `[1,2]`          |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
+|           `{}`            | `{"a":{"bb":{"ccc":{"$d":0}}}}` |   `{"a":{"bb":{}}}`    |
+| `{"a":{"b":"c","d":"e"}}` |     `{"a":{"$r":{"f":"g"}}`     |    `{"a":{"f":"g"}`    |
 
 # Types
 
@@ -210,3 +203,25 @@ The replace type replaces objects at the target location with a new object.
 ## Escape
 
 To do
+
+## The syntax for valid and invalid types
+
+Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning.
+
+Examples of valid types
+
+```js
+{ "$d": 0 }
+
+{ "$d": { "more":"data" } }
+
+{ "$r": ["any", "JSON", "value"] }
+```
+
+Examples of invalid types
+
+```js
+{ "delete": 0 }
+
+{ "$d": 0, "more":"data" }
+```
