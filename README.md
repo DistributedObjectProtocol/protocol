@@ -49,6 +49,8 @@ It is a thin layer on top of your data network that helps you communicate nodes 
 
 - **`<response_value>`** Can be any value. But is only defined if the `response_value` is equal to `0` (zero). Which means is a valid response.
 
+> If the request is rejected as `0` (zero) the implementation must convert it to `null`.
+
 ## Request without response
 
 This is useful when it does not need a response. Like a push notification.
