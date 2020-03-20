@@ -97,6 +97,8 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 
 ## Delete
 
+##### KEY: `$d`
+
 There is one big difference between [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) and DOP. [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
 
 DOP incorporates special types that can extend the basic instructions. For example, if we want to delete properties we would use `{"$d":0}`.
@@ -143,6 +145,8 @@ DOP incorporates special types that can extend the basic instructions. For examp
 
 ## Function
 
+##### KEY: `$f`
+
 It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
 
 ```js
@@ -163,6 +167,8 @@ It defines a remote function that can be used later to make a [remote procedure 
 ```
 
 ## Replace
+
+##### KEY: `$r`
 
 The replace type replaces objects at the target location with a new object.
 
@@ -185,7 +191,11 @@ The replace type replaces objects at the target location with a new object.
 
 ## Splice
 
+##### KEY: `$s`
+
 ## Inner
+
+##### KEY: `$i`
 
 ## Valid types syntax
 
