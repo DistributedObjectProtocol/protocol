@@ -183,15 +183,13 @@ The replace type replaces objects at the target location with a new object.
 { "data": { "c": 3 } }
 ```
 
-## Escape
+## Splice
 
-To do
+## Inner
 
-## The syntax for valid and invalid types
+## Valid types syntax
 
 Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning.
-
-Examples of valid types
 
 ```js
 { "$clone": 0 }
@@ -201,10 +199,15 @@ Examples of valid types
 { "$push": ["any", "JSON", "value"] }
 ```
 
-Examples of invalid types
+## Invalid types syntax
 
 ```js
 { "mytype": 0 }
 
 { "$clone": 0, "$more":"data" }
 ```
+
+## Escape
+
+To do
+
