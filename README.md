@@ -116,33 +116,6 @@ DOP incorporates special types that can extend the basic instructions. For examp
 {}
 ```
 
-```js
-// Original
-{
-  "a": "b",
-  "c": {
-    "d": "e",
-    "f": "g"
-  }
-}
-
-// Patch
-{
-  "a": "z",
-  "c": {
-    "f": { "$d": 0 }
-  }
-}
-
-// Result
-{
-  "a": "z",
-  "c": {
-    "d": "e",
-  }
-}
-```
-
 ## Function
 
 ##### KEY: `$f`
