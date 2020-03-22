@@ -176,9 +176,11 @@ Types are always defined as an Object with only one key and value. The key name 
 
 ```js
 { "$clone": 0 }
-
+```
+```js
 { "$clone": { "more":"data" } }
-
+```
+```js
 { "$push": ["any", "JSON", "value"] }
 ```
 
@@ -186,7 +188,8 @@ Types are always defined as an Object with only one key and value. The key name 
 
 ```js
 { "mytype": 0 }
-
+```
+```js
 { "$clone": 0, "$more":"data" }
 ```
 
