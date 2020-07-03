@@ -69,7 +69,7 @@ This is useful when it does not need a response. Like a push notification.
 
 # Patches
 
-A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification ([except one](#Delete)).
+A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified.
 
 ### Examples
 
@@ -89,38 +89,20 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 |       `{"a":"foo"}`       |             `null`              |         `null`         |
 |       `{"a":"foo"}`       |             `"bar"`             |        `"bar"`         |
 |     `{"e":{"$d":0}}`      |            `{"a":1}`            | `{"e":{"$d":0},"a":1}` |
-|          `[1,2]`          |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
+|        `"string"`         |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
 |           `{}`            | `{"a":{"bb":{"ccc":{"$d":0}}}}` |   `{"a":{"bb":{}}}`    |
 | `{"a":{"b":"c","d":"e"}}` |     `{"a":{"$e":{"f":"g"}}`     |    `{"a":{"f":"g"}`    |
+|         `[1,2,3]`         |              `[4]`              |         `[4]`          |
+|         `[1,2,3]`         |           `{"3": 4}`            |      `[1,2,3,4]`       |
+|         `[1,2,3]`         |         `{"length": 1}`         |         `[1]`          |
 
 # Types
-
-## Delete
-
-##### KEY: `$d`
-
-There is one big difference between [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) and DOP. [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
-
-DOP incorporates special types that can extend the basic instructions. For example, if we want to delete properties we would use `{"$d":0}`.
-
-**Examples**
-
-```js
-// Original
-{ "a": "b" }
-
-// Patch
-{ "a": { "$d": 0 } }
-
-// Result
-{}
-```
 
 ## Rpc
 
 ##### KEY: `$r`
 
-It defines an Rpc that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
+It defines a remote rpc that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
 
 ```js
 { "$r": <rpc_id> }
@@ -139,11 +121,30 @@ It defines an Rpc that can be used later to make a [remote procedure call](#Remo
 { "loginUser": function(){} }
 ```
 
+## Delete
+
+##### KEY: `$d`
+
+Removes a property from target.
+
+**Examples**
+
+```js
+// Original
+{ "a": "b" }
+
+// Patch
+{ "a": { "$d": 0 } }
+
+// Result
+{}
+```
+
 ## Replace
 
 ##### KEY: `$e`
 
-The replace type replaces objects at the target location with a new object.
+Replaces objects at the target location with a new object.
 
 ```js
 { "$e": <new_object> }
@@ -166,9 +167,13 @@ The replace type replaces objects at the target location with a new object.
 
 ##### KEY: `$s`
 
-## Inner
+## Swap
 
-##### KEY: `$i`
+##### KEY: `$w`
+
+## Multi
+
+##### KEY: `$m`
 
 ## Valid types syntax
 
