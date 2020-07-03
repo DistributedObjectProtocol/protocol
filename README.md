@@ -18,7 +18,7 @@ It is a thin layer on top of your data network that helps you communicate nodes 
 
 ```js
 // Format
-[<request_id>, <function_id>, [<argument1>, <argument2>, ...]]
+[<request_id>, <rpc_id>, [<argument1>, <argument2>, ...]]
 
 // Example
 [1, 1, ["user@mail.com", "password1234"]]
@@ -26,7 +26,7 @@ It is a thin layer on top of your data network that helps you communicate nodes 
 
 - **`<request_id>`** An integer greater than `0` (zero).
 
-- **`<function_id>`** A number or string that represent the id of the function previously defined that has to be runned.
+- **`<rpc_id>`** A number or string that represent the id of the rpc previously defined that has to be runned.
 
 - **`<argument>`** Any value.
 
@@ -57,19 +57,19 @@ This is useful when it does not need a response. Like a push notification.
 
 ```js
 // Format
-[0, <function_id>, [<argument1>, <argument2>, ...]]
+[0, <rpc_id>, [<argument1>, <argument2>, ...]]
 
 // Example
 [0, 1, {event: "USER_CONNECTED", data: { "nick":"Enzo","at":"30 Nov 2019 14:18:31" }}]
 ```
 
-- **`<function_id>`** An integer that represent the id of the function previously defined that has to be runned.
+- **`<rpc_id>`** An integer that represent the id of the rpc previously defined that has to be runned.
 
 - **`<argument>`** Any value.
 
 # Patches
 
-A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification ([except one](#Delete)).
+A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified.
 
 ### Examples
 
@@ -89,17 +89,43 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 |       `{"a":"foo"}`       |             `null`              |         `null`         |
 |       `{"a":"foo"}`       |             `"bar"`             |        `"bar"`         |
 |     `{"e":{"$d":0}}`      |            `{"a":1}`            | `{"e":{"$d":0},"a":1}` |
-|          `[1,2]`          |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
+|        `"string"`         |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
 |           `{}`            | `{"a":{"bb":{"ccc":{"$d":0}}}}` |   `{"a":{"bb":{}}}`    |
-| `{"a":{"b":"c","d":"e"}}` |     `{"a":{"$r":{"f":"g"}}`     |    `{"a":{"f":"g"}`    |
+| `{"a":{"b":"c","d":"e"}}` |     `{"a":{"$e":{"f":"g"}}`     |    `{"a":{"f":"g"}`    |
+|         `[1,2,3]`         |              `[4]`              |         `[4]`          |
+|         `[1,2,3]`         |           `{"3": 4}`            |      `[1,2,3,4]`       |
+|         `[1,2,3]`         |         `{"length": 1}`         |         `[1]`          |
 
 # Types
 
+## Rpc
+
+##### KEY: `$r`
+
+It defines a remote rpc that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
+
+```js
+{ "$r": <rpc_id> }
+```
+
+**Examples**
+
+```js
+// Original
+{}
+
+// Patch
+{ "loginUser": { "$r": 975 } }
+
+// Result in Javascript
+{ "loginUser": function(){} }
+```
+
 ## Delete
 
-There is one big difference between [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) and DOP. [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
+##### KEY: `$d`
 
-DOP incorporates special types that can extend the basic instructions. For example, if we want to delete properties we would use `{"$d":0}`.
+Removes a property from target.
 
 **Examples**
 
@@ -114,60 +140,14 @@ DOP incorporates special types that can extend the basic instructions. For examp
 {}
 ```
 
-```js
-// Original
-{
-  "a": "b",
-  "c": {
-    "d": "e",
-    "f": "g"
-  }
-}
-
-// Patch
-{
-  "a": "z",
-  "c": {
-    "f": { "$d": 0 }
-  }
-}
-
-// Result
-{
-  "a": "z",
-  "c": {
-    "d": "e",
-  }
-}
-```
-
-## Function
-
-It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
-
-```js
-{ "$f": <function_id> }
-```
-
-**Examples**
-
-```js
-// Original
-{}
-
-// Patch
-{ "loginUser": { "$f": 975 } }
-
-// Result in Javascript
-{ "loginUser": function(){} }
-```
-
 ## Replace
 
-The replace type replaces objects at the target location with a new object.
+##### KEY: `$e`
+
+Replaces objects at the target location with a new object.
 
 ```js
-{ "$r": <new_object> }
+{ "$e": <new_object> }
 ```
 
 **Examples**
@@ -177,34 +157,50 @@ The replace type replaces objects at the target location with a new object.
 { "data": { "a": 1, "b": 2 } }
 
 // Patch
-{ "data": { "$r": { "c": 3 } } }
+{ "data": { "$e": { "c": 3 } } }
 
 // Result
 { "data": { "c": 3 } }
 ```
 
-## Escape
+## Splice
 
-To do
+##### KEY: `$s`
 
-## The syntax for valid and invalid types
+## Swap
+
+##### KEY: `$w`
+
+## Multi
+
+##### KEY: `$m`
+
+## Valid types syntax
 
 Types are always defined as an Object with only one key and value. The key name must have the dollar character at the beginning.
 
-Examples of valid types
-
 ```js
 { "$clone": 0 }
+```
 
+```js
 { "$clone": { "more":"data" } }
+```
 
+```js
 { "$push": ["any", "JSON", "value"] }
 ```
 
-Examples of invalid types
+## Invalid types syntax
 
 ```js
 { "mytype": 0 }
+```
 
+```js
 { "$clone": 0, "$more":"data" }
 ```
+
+## Escape
+
+To do
