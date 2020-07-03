@@ -98,7 +98,15 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 
 # Types
 
+<<<<<<< HEAD
 ## Rpc
+=======
+## Delete
+
+##### KEY: `$d`
+
+There is one big difference between [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) and DOP. [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 ##### KEY: `$r`
 
@@ -108,6 +116,7 @@ It defines a remote rpc that can be used later to make a [remote procedure call]
 { "$r": <rpc_id> }
 ```
 
+<<<<<<< HEAD
 **Examples**
 
 ```js
@@ -124,6 +133,13 @@ It defines a remote rpc that can be used later to make a [remote procedure call]
 ## Delete
 
 ##### KEY: `$d`
+=======
+## Function
+
+##### KEY: `$f`
+
+It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 Removes a property from target.
 
@@ -142,9 +158,15 @@ Removes a property from target.
 
 ## Replace
 
+<<<<<<< HEAD
 ##### KEY: `$e`
 
 Replaces objects at the target location with a new object.
+=======
+##### KEY: `$r`
+
+The replace type replaces objects at the target location with a new object.
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 ```js
 { "$e": <new_object> }
@@ -167,6 +189,7 @@ Replaces objects at the target location with a new object.
 
 ##### KEY: `$s`
 
+<<<<<<< HEAD
 ## Swap
 
 ##### KEY: `$w`
@@ -174,6 +197,11 @@ Replaces objects at the target location with a new object.
 ## Multi
 
 ##### KEY: `$m`
+=======
+## Inner
+
+##### KEY: `$i`
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 ## Valid types syntax
 
@@ -182,11 +210,17 @@ Types are always defined as an Object with only one key and value. The key name 
 ```js
 { "$clone": 0 }
 ```
+<<<<<<< HEAD
 
 ```js
 { "$clone": { "more":"data" } }
 ```
 
+=======
+```js
+{ "$clone": { "more":"data" } }
+```
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 ```js
 { "$push": ["any", "JSON", "value"] }
 ```
@@ -196,7 +230,10 @@ Types are always defined as an Object with only one key and value. The key name 
 ```js
 { "mytype": 0 }
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 ```js
 { "$clone": 0, "$more":"data" }
 ```
@@ -204,3 +241,7 @@ Types are always defined as an Object with only one key and value. The key name 
 ## Escape
 
 To do
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
