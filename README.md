@@ -69,7 +69,7 @@ This is useful when it does not need a response. Like a push notification.
 
 # Patches
 
-A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified.
+A Patch describes changes to be made to a target JSON document using a syntax that closely mimics the document being modified. The implementation must follow all the rules defined in [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) specification ([except one](#Delete)).
 
 ### Examples
 
@@ -89,59 +89,19 @@ A Patch describes changes to be made to a target JSON document using a syntax th
 |       `{"a":"foo"}`       |             `null`              |         `null`         |
 |       `{"a":"foo"}`       |             `"bar"`             |        `"bar"`         |
 |     `{"e":{"$d":0}}`      |            `{"a":1}`            | `{"e":{"$d":0},"a":1}` |
-|        `"string"`         |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
+|          `[1,2]`          |    `{"a":"b","c":{"$d":0}}`     |      `{"a":"b"}`       |
 |           `{}`            | `{"a":{"bb":{"ccc":{"$d":0}}}}` |   `{"a":{"bb":{}}}`    |
 | `{"a":{"b":"c","d":"e"}}` |     `{"a":{"$e":{"f":"g"}}`     |    `{"a":{"f":"g"}`    |
-|         `[1,2,3]`         |              `[4]`              |         `[4]`          |
-|         `[1,2,3]`         |           `{"3": 4}`            |      `[1,2,3,4]`       |
-|         `[1,2,3]`         |         `{"length": 1}`         |         `[1]`          |
 
 # Types
 
-<<<<<<< HEAD
-## Rpc
-=======
 ## Delete
 
 ##### KEY: `$d`
 
 There is one big difference between [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) and DOP. [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) uses `null` as an instruction to delete properties, while in DOP we leave `null` as it is.
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
-##### KEY: `$r`
-
-It defines a remote rpc that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
-
-```js
-{ "$r": <rpc_id> }
-```
-
-<<<<<<< HEAD
-**Examples**
-
-```js
-// Original
-{}
-
-// Patch
-{ "loginUser": { "$r": 975 } }
-
-// Result in Javascript
-{ "loginUser": function(){} }
-```
-
-## Delete
-
-##### KEY: `$d`
-=======
-## Function
-
-##### KEY: `$f`
-
-It defines a remote function that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
-
-Removes a property from target.
+DOP incorporates special types that can extend the basic instructions. For example, if we want to delete properties we would use `{"$d":0}`.
 
 **Examples**
 
@@ -156,17 +116,34 @@ Removes a property from target.
 {}
 ```
 
-## Replace
+## Rpc
 
-<<<<<<< HEAD
-##### KEY: `$e`
-
-Replaces objects at the target location with a new object.
-=======
 ##### KEY: `$r`
 
+It defines an Rpc that can be used later to make a [remote procedure call](#Remote-Procedure-Calls).
+
+```js
+{ "$r": <rpc_id> }
+```
+
+**Examples**
+
+```js
+// Original
+{}
+
+// Patch
+{ "loginUser": { "$r": 975 } }
+
+// Result in Javascript
+{ "loginUser": function(){} }
+```
+
+## Replace
+
+##### KEY: `$e`
+
 The replace type replaces objects at the target location with a new object.
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 ```js
 { "$e": <new_object> }
@@ -189,19 +166,9 @@ The replace type replaces objects at the target location with a new object.
 
 ##### KEY: `$s`
 
-<<<<<<< HEAD
-## Swap
-
-##### KEY: `$w`
-
-## Multi
-
-##### KEY: `$m`
-=======
 ## Inner
 
 ##### KEY: `$i`
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 
 ## Valid types syntax
 
@@ -210,17 +177,11 @@ Types are always defined as an Object with only one key and value. The key name 
 ```js
 { "$clone": 0 }
 ```
-<<<<<<< HEAD
 
 ```js
 { "$clone": { "more":"data" } }
 ```
 
-=======
-```js
-{ "$clone": { "more":"data" } }
-```
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 ```js
 { "$push": ["any", "JSON", "value"] }
 ```
@@ -230,10 +191,7 @@ Types are always defined as an Object with only one key and value. The key name 
 ```js
 { "mytype": 0 }
 ```
-<<<<<<< HEAD
 
-=======
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
 ```js
 { "$clone": 0, "$more":"data" }
 ```
@@ -241,7 +199,3 @@ Types are always defined as an Object with only one key and value. The key name 
 ## Escape
 
 To do
-<<<<<<< HEAD
-=======
-
->>>>>>> 71a6ac1288bad09101f5310c5f729516c1c99cfd
